@@ -4,7 +4,6 @@ const keepAlive = require("./server")
  
  const DISCORD_TOKEN = process.env['DISCORD_TOKEN'];
 const CHANNEL_ID = process.env['CHANNEL_ID']
-const badWords = ["FUCK","SHIT","DICK","ASS","PENIS"];
 const client = new Discord.Client();
 
 
@@ -15,23 +14,29 @@ client.on('ready', () => {
 });
 
 client.on('message', msg =>{
+    //checking if bot
 if (msg.author.bot)return
+//ping/pong
+if(msg.content.toUpperCase() === 'PING'){msg.reply('pong')
+ }else if(msg.content.toUpperCase() === 'PONG')msg.reply('ping')
 
-if(msg.content.toUpperCase() === 'PING'){
-   msg.reply('pong')
-      }
-      for(var i = 0; i < badWords.length; i++) {
-    if (badWords[i] == msg.content.toUpperCase()) {
-        
-        break;
-    }
+if(containsUrl(msg.content)){
+    msg.channel.send(`<@${msg.author.id}> Sorry, this channel dosn't allow urls`)
+            msg.delete()
 }
 
-      }
-      
 
-     
-);
+      });
+
+let containsUrl = (message) => {
+  message = message.toLowerCase()
+  let urlFound = false
+  if (message.includes('http://') ||
+      message.includes('https://') ||
+      message.includes('www')) {
+        urlFound = true
+  }
+  return urlFound
+}
 keepAlive()
 client.login(DISCORD_TOKEN);
-
