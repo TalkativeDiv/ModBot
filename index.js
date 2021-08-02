@@ -22,7 +22,7 @@ if(msg.content.toUpperCase() === 'PING'){msg.reply('pong')
 
 if(containsUrl(msg.content)){
     msg.channel.send(`<@${msg.author.id}> Sorry, this channel dosn't allow urls`)
-            msg.delete()
+            msg.delete();
 }
 
 
